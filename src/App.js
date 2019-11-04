@@ -9,10 +9,13 @@ import ShoppingCart from './components/ShoppingCart';
 
 function App() {
 	const [products] = useState(data);
+	// ^^^ keeps track of all available products.
 	const [cart, setCart] = useState([]);
+	// ^^^ will keep track of all the items in our cart.
 
 	const addItem = item => {
 		// add the given item to the cart
+		setCart(cart += item);
 	};
 
 	return (
