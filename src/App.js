@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import { Route } from 'react-router-dom';
 import data from './data';
 
+//imports ProductContext
+import { ProductContext } from './contexts/ProductContext';
+
 // Components
 import Navigation from './components/Navigation';
 import Products from './components/Products';
@@ -19,26 +22,21 @@ function App() {
 	};
 
 	return (
-		<div className="App">
-			<Navigation cart={cart} />
+		<ProductContext.Provider value={{ products, addItem }}>
+			{/* ^^^ need to wrap everything and pass what is to be used. Using double {} because one of the things being passed down is a function.*/}
+			<div className="App">
+				<Navigation cart={cart} />
 
-			{/* Routes */}
-			<Route
-				exact
-				path="/"
-				render={() => (
-					<Products
-						products={products}
-						addItem={addItem}
-					/>
-				)}
-			/>
+				{/* Routes */}
+				<Route exact path="/" component={Products} />
 
-			<Route
-				path="/cart"
-				render={() => <ShoppingCart cart={cart} />}
-			/>
-		</div>
+				<Route
+					path="/cart"
+					render={() => <ShoppingCart cart={cart} />}
+				/>
+			</div>
+		</ProductContext.Provider>
+		
 	);
 }
 
