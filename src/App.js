@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import { Route } from 'react-router-dom';
 import data from './data';
 
-//imports ProductContext
+//imports Context API's
 import { ProductContext } from './contexts/ProductContext';
+import { CartContext } from './contexts/CartContext';
 
 // Components
 import Navigation from './components/Navigation';
@@ -18,23 +19,21 @@ function App() {
 
 	const addItem = item => {
 		// add the given item to the cart
-		setCart(cart += item);
+		setCart([...cart, item]);
 	};
 
 	return (
 		<ProductContext.Provider value={{ products, addItem }}>
 			{/* ^^^ need to wrap everything and pass what is to be used. Using double {} because one of the things being passed down is a function.*/}
-			<div className="App">
-				<Navigation cart={cart} />
+			<CartContext.Provider value={{cart}}>
+				<div className="App">
+					<Navigation />
 
-				{/* Routes */}
-				<Route exact path="/" component={Products} />
-
-				<Route
-					path="/cart"
-					render={() => <ShoppingCart cart={cart} />}
-				/>
-			</div>
+					{/* Routes */}
+					<Route exact path="/" component={Products} />
+					<Route path="/cart" component={ShoppingCart} />
+				</div>
+			</CartContext.Provider>
 		</ProductContext.Provider>
 		
 	);

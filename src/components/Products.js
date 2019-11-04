@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 
 // Components
 import Product from './Product';
-
+// Context API
 import { ProductContext } from '../contexts/ProductContext';
 
 const Products = () => {
